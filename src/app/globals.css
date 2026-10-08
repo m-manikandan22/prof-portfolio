@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 250 250 249;
+  --surface: 255 255 255;
+  --fg: 20 24 31;
+  --muted: 82 90 102;
+  --line: 224 226 230;
+  --accent: 37 84 214;
+}
+.dark {
+  --bg: 14 16 20;
+  --surface: 22 25 31;
+  --fg: 232 234 238;
+  --muted: 158 165 176;
+  --line: 40 45 54;
+  --accent: 125 164 255;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; color-scheme: light; }
+html.dark { color-scheme: dark; }
+body { background: rgb(var(--bg)); color: rgb(var(--fg)); -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 3px; border-radius: 4px; }
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2.5 text-sm font-semibold transition-colors duration-150;
+  }
+  .btn-primary { @apply bg-accent text-bg hover:opacity-90; }
+  .btn-ghost { @apply border border-line text-fg hover:border-accent hover:text-accent; }
+  .badge { @apply inline-block rounded-md border border-line bg-surface px-2.5 py-1 text-sm text-fg; }
+  .link { @apply text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent; }
+}
+
+/* Motion: one entrance for the portrait, a quiet fade for sections. */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.js .reveal { opacity: 0; }
+.js .reveal.in { animation: fade-in 0.45s ease-out forwards; }
+.portrait-in { animation: fade-in 0.7s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; }
+  .js .reveal.in, .portrait-in { animation: none; }
+  * { transition-duration: 0.01ms !important; }
+}
